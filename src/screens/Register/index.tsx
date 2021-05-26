@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { InputForm } from '../../components/Form/InputForm';
 import { Button } from '../../components/Form/Button';
+import { Header } from '../../components/Header';
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
 
@@ -18,7 +19,6 @@ import { CategorySelect } from '../CategorySelect';
 import {
 	Container,
 	Form,
-	Header,
 	Title,
 	Fields,
 	TransactionTypes
@@ -142,12 +142,7 @@ export function Register() {
 			onPress={Keyboard.dismiss}
 		>
 			<Container>
-					<Header>
-						<Title>
-							Cadastro
-						</Title>
-
-					</Header>
+					<Header title="Cadastro" />
 					<Form>
 						<Fields>
 							<InputForm

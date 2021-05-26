@@ -9,11 +9,11 @@ import { addMonths, subMonths, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import { HistoryCard } from '../../components/HystoryCard';
+import { Header } from '../../components/Header';
 import {
 	Container,
 	LoadContainer,
 	Content,
-	Header,
 	Title,
 	ChartContainer,
 	MouthSelect,
@@ -108,11 +108,7 @@ export function Resume() {
 	}, [selectedDate]));
 	return(
 		<Container>
-			<Header>
-				<Title>
-					Resumo
-				</Title>
-			</Header>
+			<Header title="Resumo"/>
 
 			{isLoading ?
 				<LoadContainer>
