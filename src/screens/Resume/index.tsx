@@ -151,9 +151,8 @@ export function Resume() {
 										fontWeight: 'bold',
 										fill: theme.colors.shape
 									},
-
 								}}
-								labelRadius={200}
+								labelRadius={70}
 
 							/>
 						</ChartContainer>

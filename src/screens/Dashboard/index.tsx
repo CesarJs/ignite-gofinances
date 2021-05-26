@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert,  ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -51,17 +53,27 @@ export function Dashboard(){
 		collection : DataListProps[],
 		type : 'positive' | 'negative'
 		) {
-		const lastTransations = Math.max.apply( Math, collection
-			.filter((transaction) => transaction.type === type)
-			.map((transaction) => new Date(transaction.date).getTime())
-		);
+			try {
+				const prefixo = `Última ${type === 'positive' ? 'entrada' : 'saida'} `;
+				const lastTransations = Math.max.apply( Math, collection
+					.filter((transaction) => transaction.type === type)
+					.map((transaction) => new Date(transaction.date).getTime())
+				);
+				// return format(new Date(), 'dd, MMMM', {locale: ptBR});
+				const response = Intl
+									.DateTimeFormat('pt-BR', {
+											day: '2-digit',
+											month: 'long'
+									})
+									.format(new Date(lastTransations));
+				return `${prefixo}${response}`;
+			} catch (error) {
+				return 'Sem lançamentos';
+			}
 
-	return Intl
-		.DateTimeFormat('pt-BR', {
-				day: '2-digit',
-				month: 'long'
-		})
-		.format(new Date(lastTransations));
+
+
+
 
 	}
 	async function loadTransacions() {
@@ -116,14 +128,14 @@ export function Dashboard(){
 						style: 'currency',
 						currency: 'BRL'
 					}),
-					lastTransaction: `Última entrada ${lastTransactionsEntries}`
+					lastTransaction: `${lastTransactionsEntries}`
 				},
 				expensives: {
 					amount: expenseveTotal.toLocaleString('pt-BR', {
 						style: 'currency',
 						currency: 'BRL'
 					}),
-					lastTransaction: `Última saida ${lastTransactionsExpansives}`
+					lastTransaction: `${lastTransactionsExpansives}`
 				},
 				total: {
 					amount: (entriesTotal - expenseveTotal).toLocaleString('pt-BR', {
