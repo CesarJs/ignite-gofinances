@@ -44,7 +44,7 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 				const userLogged = {
 					id: String(result.user.id),
 					email: result.user.email!,
-					name: result.user.name!,
+					name: formatName(result.user.name!),
 					photo: result.user.photoUrl!
 				};
 				setUser(userLogged);
@@ -63,7 +63,7 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 				]
 			});
 			if(credential){
-				const name = credential.fullName!.givenName!;
+				const name = formatName(credential.fullName!.givenName!);
 				const photo = `https://ui-avatars.com/api/?name=${name}+${credential.fullName!.familyName!}&length=2`;
 				const userLogged = {
 					id: String(credential.user),
@@ -76,6 +76,14 @@ function AuthProvider({ children, ...rest } : AuthProviderProps) {
 			}
 		} catch (error) {
 			throw new Error(error);
+		}
+	}
+	function formatName(name: string){
+		const splitName = name.split(" ");
+		if(splitName.length > 2){
+			return `${splitName[0]} ${splitName[1]}`;
+		}else{
+			return name;
 		}
 	}
 	async function sigOut(){
