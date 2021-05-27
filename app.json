@@ -8,5 +8,6 @@
     "assetBundlePatterns": [
       "**/*"
     ]
-  }
+  },
+	"android.package" : "com.gofinances"
 }

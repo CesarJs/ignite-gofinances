@@ -6,6 +6,8 @@ import { ptBR } from 'date-fns/locale';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
+import { useAuth } from '../../hooks/auth';
+
 import { HighLightCard } from '../../components/HighLightCard';
 import { TransactionCard , TransactionCardProps} from '../../components/TransactionCard';
 
@@ -27,6 +29,7 @@ import {
 	LoadContainer
  } from './styles';
 
+
  export interface DataListProps extends TransactionCardProps {
 	 id: string;
  }
@@ -43,12 +46,13 @@ import {
 
  }
 export function Dashboard(){
-	const dataKey = '@gofinacen:transacations';
+
+	const { sigOut, user } = useAuth();
+	const dataKey = `@gofinacen:transacations_user:${user.id}`;
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ transactions, setTransactions ] = useState<DataListProps[]>([]);
 	const [ highlightData , setHighilightData ] = useState<HighLighsDataProps>({} as HighLighsDataProps);
 	const theme = useTheme();
-
 	function getLastDate(
 		collection : DataListProps[],
 		type : 'positive' | 'negative'
@@ -184,13 +188,13 @@ export function Dashboard(){
 					<UserWrapper>
 						<UserInfo>
 							<Photo
-								source={{uri : 'https://avatars.githubusercontent.com/u/17380795?s=60&v=4'}} />
+								source={{uri : user.photo ? user.photo : 'https://i.pinimg.com/originals/8f/6e/60/8f6e606eb6779aa33ec35da0a0cc8b7e.png'}} />
 							<User>
 								<UserGreeting>Olá, </UserGreeting>
-								<UserName>Cesar </UserName>
+								<UserName>{user.name} </UserName>
 							</User>
 						</UserInfo>
-						<LogoutButton onPress={() => {}}>
+						<LogoutButton onPress={sigOut}>
 							<Icon name="power"/>
 						</LogoutButton>
 					</UserWrapper>

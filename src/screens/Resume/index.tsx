@@ -4,6 +4,7 @@ import { ActivityIndicator } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import { useAuth } from '../../hooks/auth';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { addMonths, subMonths, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -14,7 +15,6 @@ import {
 	Container,
 	LoadContainer,
 	Content,
-	Title,
 	ChartContainer,
 	MouthSelect,
 	MounthSelectButton,
@@ -22,6 +22,7 @@ import {
 	Mounth,
  } from './styles';
 import { categories } from '../../utils/categories';
+
 
  export interface TransactionProps {
 	type: 'positive' | 'negative';
@@ -56,7 +57,8 @@ export function Resume() {
 
 	async function loadData(){
 
-		const dataKey = '@gofinacen:transacations';
+		const { user } = useAuth();
+		const dataKey = `@gofinacen:transacations_user:${user.id}`;
 		const response = await AsyncStorage.getItem(dataKey);
 		const responseFormatted = response ? JSON.parse(response) : [];
 

@@ -5,8 +5,10 @@ import * as Yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth';
 
 import { InputForm } from '../../components/Form/InputForm';
 import { Button } from '../../components/Form/Button';
@@ -19,7 +21,6 @@ import { CategorySelect } from '../CategorySelect';
 import {
 	Container,
 	Form,
-	Title,
 	Fields,
 	TransactionTypes
 } from './styles';
@@ -39,7 +40,8 @@ const schema = Yup.object().shape({
 	.required('Você precisa informar o valor!')
 });
 export function Register() {
-	const dataKey = '@gofinacen:transacations';
+	const { user } = useAuth();
+	const dataKey = `@gofinacen:transacations_user:${user.id}`;
 	const [ transactionType, setTransacionType] = useState('');
 	const [ showModal, setShowModal ] = useState(false);
 
