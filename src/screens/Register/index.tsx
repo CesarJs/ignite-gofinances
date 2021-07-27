@@ -41,7 +41,8 @@ const schema = Yup.object().shape({
 });
 export function Register() {
 	const { user } = useAuth();
-	const dataKey = `@gofinacen:transacations_user:${user.id}`;
+	const dataKey = `@gofinacen:transacations_user:${user?.id ? user.id : '-' }`;
+
 	const [ transactionType, setTransacionType] = useState('');
 	const [ showModal, setShowModal ] = useState(false);
 
@@ -112,33 +113,6 @@ export function Register() {
 		}
 	}
 
-	// useEffect(() => {
-	// 	// async function loadData(){
-	// 	// 	try {
-	// 	// 		const currentData = await AsyncStorage.getItem(dataKey);
-	// 	// 		console.log(JSON.parse(currentData!));
-	// 	// 	} catch (error) {
-	// 	// 		console.log(error);
-	// 	// 		Alert.alert("Não foi possivel carregar as informações, tente novamente.");
-	// 	// 	}
-
-	// 	// }
-	// 	// loadData();
-
-	// 	// async function deleteData(){
-	// 	// 	const currentData = await AsyncStorage.getItem(dataKey);
-	// 	// 	if(currentData){
-	// 	// 		try {
-	// 	// 			await AsyncStorage.removeItem(dataKey);
-	// 	// 		} catch (error) {
-	// 	// 			console.log(error);
-	// 	// 			Alert.alert('Não foi possivel deletar, por favor tente novamente!');
-	// 	// 		}
-	// 	// 	}
-	// 	// }
-
-	// 	// deleteData();
-	// });
 	return (
 		<TouchableWithoutFeedback
 			onPress={Keyboard.dismiss}
@@ -178,6 +152,7 @@ export function Register() {
 							</TransactionTypes>
 
 							<CategorySelectButton
+								testID="button-category"
 								title={category.name}
 								onPress={handleOpenSelectCategoryModal}
 							/>
@@ -187,7 +162,7 @@ export function Register() {
 							onPress={handleSubmit(handleRegister)}
 						/>
 					</Form>
-					<Modal  visible={showModal}>
+					<Modal testID="modal-category" visible={showModal}>
 						<CategorySelect
 							category={category}
 							setCategory={setCategory}

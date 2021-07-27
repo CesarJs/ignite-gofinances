@@ -26,7 +26,7 @@ import { ActivityIndicator, Alert } from 'react-native';
 
 export function Signin(){
 	const [ isLoading, setIsLoading ] = useState(false);
-	const { signInWithGoogle, signInWithApple} = useAuth();
+	const { signInWithGoogle, signInWithApple } = useAuth();
 	const theme = useTheme();
 	async function handleSignInWithGoogle(){
 		try {
