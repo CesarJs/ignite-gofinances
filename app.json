@@ -7,7 +7,17 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "splash": {
+      "image": "./resources/splash.png",
+      "backgroundColor": "#5636D3"
+    },
+    "icon": "./resources/icon.png",
+    "notification": {
+      "icon": "./resources/adaptive-icon.png",
+      "color": "#5636D3"
+    },
+    "description": ""
   },
-	"android.package" : "com.gofinances"
+  "android.package": "com.gofinances"
 }

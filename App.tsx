@@ -17,8 +17,6 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme from './src/global/styles/theme';
-import { AppRoutes } from './src/routes/app.routes';
-import { Signin } from './src/screens/Signin';
 import { StatusBar } from 'react-native';
 
 import { AuthProvider, useAuth } from './src/hooks/auth';

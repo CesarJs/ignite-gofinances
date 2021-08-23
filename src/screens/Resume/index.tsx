@@ -45,6 +45,7 @@ export function Resume() {
 	const [selectedDate , setSelectedDate] = useState(new Date());
 	const [totalByCategories , setTotalByCategories] = useState<CategoryDataProps[]>([]);
 	const theme = useTheme();
+	const { user } = useAuth();
 
 	function handleDateChange(action : 'next' | 'previous'){
 		setIsLoading(true);
@@ -57,7 +58,7 @@ export function Resume() {
 
 	async function loadData(){
 
-		const { user } = useAuth();
+
 		const dataKey = `@gofinacen:transacations_user:${user.id}`;
 		const response = await AsyncStorage.getItem(dataKey);
 		const responseFormatted = response ? JSON.parse(response) : [];
@@ -155,7 +156,7 @@ export function Resume() {
 							/>
 						</ChartContainer>
 						{
-							totalByCategories.map((item) => (
+							totalByCategories.length > 0 && totalByCategories.map((item) => (
 								<HistoryCard
 									key={String(item.key)}
 									color={item.color}
@@ -163,6 +164,14 @@ export function Resume() {
 									title={item.name}
 								/>
 								))
+						}
+						{ totalByCategories.length === 0 &&
+							<HistoryCard
+								key={String('zerado')}
+								color={'#5636D3'}
+								amount={'-'}
+								title={'Sem despesas'}
+							/>
 						}
 					</Content>
 
